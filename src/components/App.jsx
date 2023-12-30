@@ -30,6 +30,7 @@ export class App extends Component {
           if (data.hits.length === 0) {
             toast.info('No images found!', {
               position: 'bottom-center',
+              theme: 'colored',
               autoClose: 2000,
               closeOnClick: true,
             });
@@ -50,6 +51,8 @@ export class App extends Component {
                 toast.success(`Hooray! We found ${data.totalHits} images`, {
                   position: 'top-right',
                   theme: 'colored',
+                  autoClose: 2000,
+                  closeOnClick: true,
                 });
               }
             }
@@ -59,7 +62,8 @@ export class App extends Component {
           console.error('Error fetching data:', error);
           toast.error('Error fetching images. Please try again later.', {
             position: 'bottom-center',
-            autoClose: 5000,
+            theme: 'colored',
+            autoClose: 2000,
             closeOnClick: true,
           });
         })
@@ -69,8 +73,17 @@ export class App extends Component {
     }
   }
 
-  handleSearchSubmit = (query) => {
-    this.setState({ query, photos: [], page: 1 });
+  handleSearchSubmit = (name) => {
+    if (this.state.query.toLowerCase() === name.toLowerCase()) {
+      toast.info(`You are searching for ${name} already!`, {
+        position: 'top-center',
+        theme: 'colored',
+        autoClose: 2000,
+        closeOnClick: true,
+      });
+      /*return alert(`You are searching for "${name}" already!`);*/
+    }
+    this.setState({ query: name.toLowerCase(), photos: [], page: 1 });
   };
 
   handleLoadMore = () => {
